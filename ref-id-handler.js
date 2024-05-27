@@ -35,7 +35,7 @@ function checkAndSetRefIdCookie() {
 function addRefIdToForm() {
     const refId = getCookie('ref_id');
     if (refId) {
-        const form = document.querySelector('form');
+        const form = document.querySelector('wf-form-Lead-Form');
         if (form) {
             let hiddenField = form.querySelector('input[name="ref_id"]');
             if (!hiddenField) {
