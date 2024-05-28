@@ -1,4 +1,3 @@
-
 // Function to get URL parameters
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -31,20 +30,16 @@ function checkAndSetRefIdCookie() {
     }
 }
 
-// Function to add ref_id to a form's hidden field
-function addRefIdToForm() {
+// Function to set ref_id value in the form's hidden field
+function setRefIdInForm() {
     const refId = getCookie('ref_id');
     if (refId) {
-        const form = document.querySelector('wf-form-Lead-Form');
+        const form = document.getElementById('wf-form-Lead-Form'); // Using the provided form ID
         if (form) {
-            let hiddenField = form.querySelector('input[name="ref_id"]');
-            if (!hiddenField) {
-                hiddenField = document.createElement('input');
-                hiddenField.type = 'hidden';
-                hiddenField.name = 'ref_id';
-                form.appendChild(hiddenField);
+            const hiddenField = form.querySelector('input[name="ref_id"]');
+            if (hiddenField) {
+                hiddenField.value = refId;
             }
-            hiddenField.value = refId;
         }
     }
 }
@@ -52,5 +47,5 @@ function addRefIdToForm() {
 // Run the functions on page load
 window.onload = function() {
     checkAndSetRefIdCookie();
-    addRefIdToForm();
+    setRefIdInForm();
 };
