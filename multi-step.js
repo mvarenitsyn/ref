@@ -636,56 +636,43 @@ function validation() {
                 dateFilled = false;
             }
         });
-        $(steps[x]).find(":input[type=\"tel\"][required]").each(function(_0x2a5016) {
-            if ($(this).val() !== "") {
-                let _0x2ed8bb = $(this).val().length;
-                let _0x3f82e9 = $(this).data("min-character") ? $(this).data("min-character") : 0x0;
-                if ($(this).data("phone-autoformat")) {
-                    var _0x1aff43 = phoneAutoFormat($(this).data("phone-autoformat"));
-                    $(this).val(_0x1aff43($(this).val()));
-                }
-                if (phoneValidation($(this).val(), _0x2ed8bb, _0x3f82e9)) {
-                    empReqTel = empReqTel.filter(_0xf55dde => _0xf55dde.input !== _0x2a5016);
-                } else {
-                    empReqTel.push({
-                        input: _0x2a5016
-                    });
-                }
-                //Start here
-            let _0x1e883d = $(this).val().length;
-            let _0x1fa08b = $(this).data("min-character") ? $(this).data("min-character") : 0x0;
-            if ($(this).val() !== "" && _0x1e883d >= _0x1fa08b) {
-                empReqInput = empReqInput.filter(_0x43d0e3 => _0x43d0e3.input !== _0x4cddbe);
-            } else {
-                if (!empReqInput.find(_0x256799 => _0x256799.input === _0x4cddbe)) {
-                    empReqInput.push({
-                        input: _0x4cddbe
-                    });
-                }
-                unfilledArr.push({
-                    input: $(this).attr("name")
-                });
+        $(steps[x]).find(":input[type=\"tel\"][required]").each(function(index, element) {
+    let inputValue = $(element).val();
+    let valueLength = inputValue.length;
+    let minCharacters = $(element).data("min-character") ? $(element).data("min-character") : 0;
+    
+    if (inputValue !== "") {
+        if ($(element).data("phone-autoformat")) {
+            let phoneFormatter = phoneAutoFormat($(element).data("phone-autoformat"));
+            $(element).val(phoneFormatter(inputValue));
+            inputValue = $(element).val(); // Update inputValue after formatting
+        }
+        
+        if (phoneValidation(inputValue, valueLength, minCharacters)) {
+            empReqTel = empReqTel.filter(inputObj => inputObj.input !== element);
+        } else {
+            empReqTel.push({ input: element });
+        }
+        
+        // Text input validation
+        if (valueLength >= minCharacters) {
+            empReqInput = empReqInput.filter(inputObj => inputObj.input !== element);
+        } else {
+            if (!empReqInput.find(inputObj => inputObj.input === element)) {
+                empReqInput.push({ input: element });
             }
+            unfilledArr.push({ input: $(element).attr("name") });
+        }
+        
+    } else {
+        if (!empReqTel.find(inputObj => inputObj.input === element)) {
+            empReqTel.push({ input: element });
+        }
+        unfilledArr.push({ input: $(element).attr("name") });
+    }
 
-
-
-                //Insert here
-            } else {
-                if (!empReqTel.find(_0x3789b0 => _0x3789b0.input === _0x2a5016)) {
-                    empReqTel.push({
-                        input: _0x2a5016
-                    });
-                }
-                unfilledArr.push({
-                    input: $(this).attr("name")
-                });
-            }
-            if (empReqTel.length === 0x0) {
-                telFilled = true;
-            } else {
-                telFilled = false;
-            }
-        });
+    telFilled = empReqTel.length === 0;
+});
         $(steps[x]).find(":input[type=\"file\"][required]").each(function(_0x18507f) {
             if ($(this).val() !== "") {
                 empReqFile = empReqFile.filter(_0x6e4ebb => _0x6e4ebb.input !== _0x18507f);
