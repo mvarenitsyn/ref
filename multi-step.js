@@ -671,7 +671,7 @@ function validation() {
         unfilledArr.push({ input: $(element).attr("name") });
     }
 
-    telFilled = empReqTel.length && (valueLength >= minCharacters) === 0;
+    telFilled = empReqTel.length === 0;
 });
         $(steps[x]).find(":input[type=\"file\"][required]").each(function(_0x18507f) {
             if ($(this).val() !== "") {
