@@ -636,7 +636,7 @@ function validation() {
                 dateFilled = false;
             }
         });
-        $(steps[x]).find(":input[type=\"tel\"][required]").each(function(index, element) {
+    $(steps[x]).find(":input[type=\"tel\"][required]").each(function(index, element) {
     let inputValue = $(element).val();
     let valueLength = inputValue.length;
     let minCharacters = $(element).data("min-character") ? $(element).data("min-character") : 0;
@@ -657,11 +657,13 @@ function validation() {
         // Text input validation
         if (valueLength >= minCharacters) {
             empReqInput = empReqInput.filter(inputObj => inputObj.input !== element);
+            telFilled = true;
         } else {
             if (!empReqInput.find(inputObj => inputObj.input === element)) {
                 empReqInput.push({ input: element });
             }
             unfilledArr.push({ input: $(element).attr("name") });
+            telFilled = false;
         }
         
     } else {
@@ -669,9 +671,10 @@ function validation() {
             empReqTel.push({ input: element });
         }
         unfilledArr.push({ input: $(element).attr("name") });
+        telFilled = false;
     }
 
-    telFilled = empReqTel.length === 0;
+    //telFilled = empReqTel.length && (valueLength >= minCharacters) === 0;
 });
         $(steps[x]).find(":input[type=\"file\"][required]").each(function(_0x18507f) {
             if ($(this).val() !== "") {
